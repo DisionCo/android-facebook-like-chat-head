@@ -45,7 +45,7 @@ public class ShowHudService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        mWindowManager = (WindowManager) getSystemService(Service.WINDOW_SERVICE);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     }
 
@@ -112,9 +112,8 @@ public class ShowHudService extends Service {
                         // remove crumpled paper when the it is in the recycle bin's area
                         if ((mPaperParams.y > windowHeight - ivRecycleBin.getHeight() - ivCrumpledPaper.getHeight()) &&
                                 ((mPaperParams.x > centerOfScreenByX - ivRecycleBin.getWidth() - ivCrumpledPaper.getWidth() / 2) && (mPaperParams.x < centerOfScreenByX + ivRecycleBin.getWidth() / 2))) {
-                            mWindowManager.removeView(ivCrumpledPaper);
-                            ivCrumpledPaper = null;
                             mVibrator.vibrate(100);
+                            stopSelf();
                         }
 
                         // always remove recycle bin ImageView when paper is dropped
